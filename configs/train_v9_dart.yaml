@@ -1,0 +1,29 @@
+name: v9_dart
+description: >
+  DART boosting (dropout applied to trees, not just row/feature sampling)
+  instead of plain GBDT - a different regularization mechanism that can
+  reduce overfitting to any single tree's mistakes. Not explored in the
+  earlier research phase. Fewer seeds (3) since DART trains noticeably
+  slower per round than GBDT; early stopping is skipped because DART's
+  training curve is not monotonic (dropped trees make intermediate scores
+  unreliable), so a fixed, moderate round count is used instead.
+
+seeds: [42, 123, 7]
+top_n_features: 100
+num_boost_round: 400
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  boosting: dart
+  drop_rate: 0.1
+  learning_rate: 0.08
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

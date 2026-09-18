@@ -1,0 +1,23 @@
+name: v6_top150
+description: >
+  Feature-count sweep vs v3 (top-100): is 100 actually the best cutoff, or
+  just what the earlier research phase settled on? Same cfgB hyperparams
+  and 5 seeds, top-150 features instead of top-100.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 150
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

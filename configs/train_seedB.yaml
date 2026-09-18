@@ -1,0 +1,27 @@
+name: v26_ff_low
+description: >
+  v24 recipe (cfgB + top-100 selection + 5 seeds, full feature set incl.
+  BTYD/momentum/calendar/holiday_affinity/unused columns) with
+  feature_fraction lowered from 0.75 to 0.5 - see
+  experiments/hparam_sweep/notes.md. Confirmed on 2 independent seed-pair
+  runs of honest multi-fold (3 walk-forward rounds each): -0.0008 to -0.0009
+  mean RMSLE vs cfgB's feature_fraction=0.75, consistent direction on
+  fold_3/fold_5 both times, ~flat on fold_4.
+
+seeds: [901, 3307, 88, 4242, 17]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.5
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

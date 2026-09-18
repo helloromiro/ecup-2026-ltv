@@ -1,0 +1,22 @@
+name: catboost_diverse
+description: >
+  CatBoost on the full feature set (no top-N selection, so it sees
+  everything LightGBM's Ensemble A/B see plus BTYD columns) - primarily
+  intended as an ensemble diversity member, not a standalone winner.
+  CatBoost's symmetric-tree + ordered-boosting construction produces a
+  structurally different error pattern than LightGBM's leaf-wise trees,
+  which is what an equal-weight or stacked blend can actually exploit.
+
+seeds: [42, 123, 7]
+num_boost_round: 800
+early_stopping_rounds: 60
+
+catboost_params:
+  loss_function: RMSE
+  learning_rate: 0.05
+  depth: 8
+  l2_leaf_reg: 6.0
+  subsample: 0.8
+  bootstrap_type: Bernoulli
+  thread_count: 4
+  verbose: false

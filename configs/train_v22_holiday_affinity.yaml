@@ -1,0 +1,30 @@
+name: v22_holiday_affinity
+description: >
+  v3 recipe (cfgB + top-100 selection + 5 seeds) on the feature set
+  expanded with holiday_uplift_gmv/holiday_uplift_ratio/holiday_baseline_daily_gmv
+  (see src/ecup_ltv/holiday_affinity.py) - per-user spend response to the
+  2025 occurrence of 23 February / 8 March, motivated by the finding that
+  the level-shift correction (which assumes a UNIFORM boost) misallocates
+  a highly concentrated effect (top 1% of users capture ~45% of total
+  uplift). Cannot be honestly backtested against a holiday-containing
+  target (no fold has one) - this multi-fold run only checks it doesn't
+  regress ordinary (non-holiday) fold performance and whether gain-
+  importance picks it up at all.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

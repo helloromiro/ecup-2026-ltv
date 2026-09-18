@@ -1,0 +1,25 @@
+name: v3b_cfgB_full
+description: >
+  Ablation of v3: same tuned hyperparameters (cfgB) and 5 seeds, but NO
+  feature selection (all features, now including the RFM/seasonality/CoV
+  additions from configs/features.yaml). Isolates whether v3's CV gain over
+  v2 comes from the hyperparameter retune or from the top-100 feature
+  selection - v3 changed both at once.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: null
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

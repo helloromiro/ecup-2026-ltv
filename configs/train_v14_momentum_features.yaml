@@ -1,0 +1,26 @@
+name: v14_momentum_features
+description: >
+  v3 recipe (cfgB + top-100 gain-importance selection + 5 seeds) on the
+  feature set expanded with period-over-period momentum features
+  (gmv/searches/to_ord growth rate between adjacent non-overlapping
+  windows, e.g. last-7d vs the-7d-before-that - see features.py). Tests
+  whether acceleration/deceleration signal, which the existing cumulative
+  *_ratio_* features can't express, carries independent predictive value.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

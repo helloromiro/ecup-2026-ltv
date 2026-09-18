@@ -1,0 +1,29 @@
+name: v4_extra_features
+description: >
+  v3 recipe (cfgB + top-100 feature selection + 5 seeds) rerun on the
+  expanded feature set: + weekday-of-anchor, day-of-month, GMV
+  coefficient-of-variation (90d/all), RFM-style composite score
+  (active_days_90d / days_since_last_gmv). Also switches from a fixed
+  num_boost_round to early-stopping-determined rounds (on the CV split
+  only; the production fit reuses the resulting mean best_iteration since
+  it has no held-out data of its own - see effective_num_boost_round in
+  metrics.json).
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 100
+num_boost_round: 700
+early_stopping_rounds: 50
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

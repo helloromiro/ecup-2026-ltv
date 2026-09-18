@@ -1,0 +1,28 @@
+name: v12_btyd_features
+description: >
+  Same recipe as v3 (cfgB, top-100 gain-importance selection, 5 seeds) but
+  the candidate feature pool now includes 4 BTYD (BG/NBD + Gamma-Gamma)
+  columns: btyd_pred_purchases, btyd_prob_alive, btyd_expected_value,
+  btyd_clv (see src/ecup_ltv/btyd.py). These come from a genuinely
+  different model family (parametric purchase-timing statistics, not
+  window aggregates), so if they carry independent signal, gain-importance
+  selection should keep them in the top-100 on its own - this experiment
+  tests that directly rather than assuming BTYD helps.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

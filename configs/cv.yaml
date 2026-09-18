@@ -1,0 +1,7 @@
+# Walk-forward CV: anchors are spaced stride_days apart, each anchor needs
+# min_history_days of past data and horizon_days of future data available.
+# n_folds anchors are generated as the last N steps of that walk.
+n_folds: 6
+stride_days: 14
+min_history_days: 120
+horizon_days: 30

@@ -1,0 +1,23 @@
+name: v1_baseline
+description: >
+  Baseline: одна LightGBM-модель на полном наборе признаков, без seed-бэггинга
+  и без отбора признаков. Соответствует конфигу, которым в исследовательской
+  фазе был получен submission.csv / submission_v2_lgb_only.csv.
+
+seeds: [42]
+top_n_features: null
+num_boost_round: 650
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.08
+  num_leaves: 63
+  max_depth: 7
+  min_data_in_leaf: 200
+  feature_fraction: 0.7
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

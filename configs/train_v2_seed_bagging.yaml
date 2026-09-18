@@ -1,0 +1,25 @@
+name: v2_seed_bagging
+description: >
+  v1 + 4-seed bagging (42, 123, 7, 2024): усредняем log1p-предсказания
+  четырёх независимо обученных моделей, чтобы снизить дисперсию от
+  случайности LightGBM (bagging_fraction/feature_fraction сэмплирования
+  и случайной инициализации). Признаки и гиперпараметры не менялись
+  относительно v1 — это наша официальная точка на лидерборде (2026-08-11).
+
+seeds: [42, 123, 7, 2024]
+top_n_features: null
+num_boost_round: 650
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.08
+  num_leaves: 63
+  max_depth: 7
+  min_data_in_leaf: 200
+  feature_fraction: 0.7
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

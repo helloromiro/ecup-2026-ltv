@@ -1,0 +1,25 @@
+# IDE
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.egg-info/
+.venv/
+venv/
+
+# data (raw and derived - not reproducible via git, see README for how to obtain)
+data/raw/*
+data/processed/
+data/interim/
+
+# artifacts: trained models, submissions, feature cache
+artifacts/*
+
+# CatBoost training-run logs (auto-created in cwd by catboost.fit)
+catboost_info/
+
+# OS
+.DS_Store

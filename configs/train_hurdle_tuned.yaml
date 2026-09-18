@@ -1,0 +1,40 @@
+name: hurdle_tuned
+description: >
+  Two-stage model: classifier P(target>0) x regressor fit on active rows
+  only, combined by soft multiply (see src/ecup_ltv/train_hurdle.py). The
+  earlier research phase tried a single untuned version of this and found
+  it roughly on par with a plain regressor - this uses cfgB-strength
+  hyperparameters and seed bagging on both stages, evaluated the same way
+  as everything else in this repo (walk-forward, held-out fold_05).
+
+classifier_seeds: [42, 123, 7]
+classifier_rounds: 500
+classifier_params:
+  objective: binary
+  metric: binary_logloss
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1
+
+regressor_seeds: [42, 123, 7]
+regressor_rounds: 550
+regressor_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 100
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

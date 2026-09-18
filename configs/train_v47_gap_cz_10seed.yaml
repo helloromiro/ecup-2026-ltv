@@ -1,0 +1,29 @@
+name: v47_gap_cz_10seed
+description: >
+  v37's recipe with ten seeds instead of five. Averaging more independently
+  seeded boosters reduces variance by a theorem rather than by a hypothesis,
+  so this is the one change that cannot be wrong in sign - it just may be too
+  small to see. On the v1->v2 measurement (1 -> 4 seeds was worth 0.0023) the
+  seed-noise variance implies roughly 0.00013 here, which is under the
+  leaderboard's 0.00033 noise floor on its own, but costs only compute.
+
+  Kept as a separate artifact so today's probe set stays internally
+  consistent: p1 and p6 were built against the five-seed v37.
+
+seeds: [42, 123, 7, 2024, 555, 31, 77, 101, 202, 303]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.5
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

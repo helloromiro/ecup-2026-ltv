@@ -1,0 +1,26 @@
+name: reg_combined_screen
+description: >
+  Regularization-cause screen for the high-value underestimation: combines
+  all three loosened levers (min_data_in_leaf 150->50, lambda_l2 6.0->1.0,
+  num_leaves 127->255) vs the v3_screen_2seed baseline, to see the
+  ceiling effect of removing regularization altogether (at real risk of
+  overfitting the bulk - that's exactly what this screen checks for). 2
+  seeds, screening only.
+
+seeds: [42, 123]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 255
+  max_depth: 8
+  min_data_in_leaf: 50
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 1.0
+  num_threads: 4
+  verbosity: -1

@@ -1,0 +1,29 @@
+name: v41_l1
+description: >
+  Same recipe, L1 objective instead of L2. Not expected to be better on its
+  own - RMSLE is squared error on log1p, so L2 is the matched loss and L1
+  targets the conditional median rather than the mean. The point is
+  diversity: a model that errs differently is worth a nonzero weight even
+  when it is worse alone, and the leaderboard can measure that weight exactly
+  where local stacking has failed three times (v13, v15, catboost).
+
+  experiments/l1_diversity/notes.md rejected this on local evidence, which we
+  now know cannot resolve effects of this size.
+
+seeds: [42, 123, 7]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression_l1
+  metric: mae
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.5
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 6
+  verbosity: -1

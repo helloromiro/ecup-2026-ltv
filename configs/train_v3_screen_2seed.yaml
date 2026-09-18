@@ -1,0 +1,28 @@
+name: v3_screen_2seed
+description: >
+  v2 + retuned LightGBM (больше листьев/глубина, ниже learning_rate) +
+  отбор top-100 признаков по gain-importance (обучается быстрее на ~25% и
+  на holdout дал небольшой, но устойчивый прирост против полного набора
+  признаков: 1.6628 vs 1.6635) + 5-й сид (555) поверх v2 — более быстрое
+  обучение на меньшем наборе признаков позволило добавить сид без упора
+  в лимит времени. Цель: довести нашу линию версий (v1->v2->v3) до того
+  же уровня сложности рецепта, которого коллега по команде достиг под
+  именем v9 в параллельном треке экспериментов.
+
+seeds: [42, 123]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

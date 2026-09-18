@@ -1,0 +1,31 @@
+name: asym_p15_screen
+description: >
+  Asymmetric-loss screen for the high-value underestimation (see
+  experiments/highvalue_reweighting/notes.md and
+  regularization_sweep_notes.md, which ruled out both value-based
+  reweighting and tree capacity as fixes). Custom LightGBM objective
+  (src/ecup_ltv/asymmetric_loss.py): penalizes underestimation (current
+  residual < 0) 1.5x as much as overestimation, at every boosting
+  iteration - unlike sample reweighting, this responds to the model's
+  CURRENT error direction, not a fixed target-magnitude-derived weight.
+  Same recipe as v3_screen_2seed otherwise. 2 seeds, screening only.
+
+seeds: [42, 123]
+top_n_features: 100
+num_boost_round: 550
+
+asymmetric_under_penalty: 1.5
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

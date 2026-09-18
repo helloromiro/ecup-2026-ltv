@@ -1,0 +1,24 @@
+name: reg_l2low_screen
+description: >
+  Regularization-cause screen for the high-value underestimation: tests
+  whether L2 shrinkage toward the population mean drives the tail bias, by
+  loosening ONLY lambda_l2 (6.0 -> 1.0) vs the v3_screen_2seed baseline,
+  holding every other hyperparameter fixed. 2 seeds, screening only.
+
+seeds: [42, 123]
+top_n_features: 100
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 1.0
+  num_threads: 4
+  verbosity: -1

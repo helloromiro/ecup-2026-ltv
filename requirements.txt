@@ -1,0 +1,6 @@
+polars==1.43.2
+lightgbm==4.6.0
+numpy==2.5.1
+PyYAML==6.0.3
+catboost==1.2.10
+lifetimes==0.11.3

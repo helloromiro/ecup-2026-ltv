@@ -1,0 +1,29 @@
+name: ensemble_b_exact
+description: >
+  Faithful reproduction of "Ensemble B" from the actual record-holding
+  submission (public LB RMSLE 1.6551152907876383, achieved by a teammate
+  in a parallel research track, code shared as winning_pipeline_record.py):
+  cfgB hyperparameters, full feature set (no top-N selection), exactly the
+  3 seeds and round count used in that recipe. Combined with Ensemble A
+  (= this repo's v2_seed_bagging, which already matches their Ensemble A
+  hyperparameters/seeds/rounds exactly) via a log-space blend, this
+  reproduces their winning recipe end-to-end using this repo's own code
+  (not their CSV or script directly).
+
+seeds: [42, 123, 7]
+top_n_features: null
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

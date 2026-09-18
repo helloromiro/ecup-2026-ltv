@@ -1,0 +1,33 @@
+name: v36_capacity
+description: >
+  Capacity retuned against the CURRENT feature pool (442 base + 40 gap).
+  Every previous hyperparameter was chosen when the pool was 442 features
+  and only feature_fraction had been revisited since. On honest three-round
+  multi-fold this config is -0.0288 against the previous recipe, monotone in
+  every capacity axis, 3/3 folds, and the sweep never turned over - see
+  experiments/capacity_retune/notes.md.
+
+  The likely mechanism is that the same 250k users appear in training,
+  validation and test, so at this granularity the model partly identifies
+  individual users by their feature signature and returns their own level.
+  That legitimately transfers - the test asks about those same users - but it
+  decays with distance in time, which is why the gain shrinks from fold_3 to
+  fold_5 and why the leaderboard, not CV, has to price it.
+
+seeds: [42, 123, 7]
+top_n_features: 250
+num_boost_round: 1200
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.03
+  num_leaves: 511
+  max_depth: 16
+  min_data_in_leaf: 20
+  feature_fraction: 0.5
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 6
+  verbosity: -1

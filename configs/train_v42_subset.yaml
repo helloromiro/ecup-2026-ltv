@@ -1,0 +1,26 @@
+name: v42_subset
+description: >
+  Same recipe with an aggressively different view of the feature space:
+  feature_fraction 0.2 and no top-N screening, so every tree sees a small
+  random slice of all ~530 columns. Alone it should be a little worse; as a
+  blend component it decorrelates from the screened models, which all look at
+  the same top-100.
+
+  Purely a diversity source for a leaderboard-measured weight.
+
+seeds: [42, 123, 7]
+num_boost_round: 700
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.2
+  bagging_fraction: 0.7
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 6
+  verbosity: -1

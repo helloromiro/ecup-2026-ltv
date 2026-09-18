@@ -1,0 +1,25 @@
+name: v7_top50
+description: >
+  Feature-count sweep vs v3 (top-100), other direction: more aggressive
+  pruning to top-50. If quality holds, this is the cheapest/fastest model
+  in the whole sweep (relevant to the jury's "resource efficiency"
+  criterion) - if it doesn't hold, that itself tells us where the useful
+  signal actually lives among the 233 features.
+
+seeds: [42, 123, 7, 2024, 555]
+top_n_features: 50
+num_boost_round: 550
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

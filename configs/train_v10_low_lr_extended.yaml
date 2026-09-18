@@ -1,0 +1,27 @@
+name: v10_low_lr_extended
+description: >
+  Follow-up to v8_low_lr: v8's best_iteration hit its 2000-round ceiling
+  for all 5 seeds without converging (still improving), so this raises the
+  ceiling to 3000 with more early-stopping patience to see where it
+  actually plateaus. 3 seeds instead of 5 to keep runtime bounded given
+  the already-large time budget spent on this sweep - if this clearly
+  beats v3/v8, it is worth re-running with the full 5-seed bag afterwards.
+
+seeds: [42, 123, 7]
+top_n_features: 100
+num_boost_round: 3000
+early_stopping_rounds: 100
+
+lgbm_params:
+  objective: regression
+  metric: rmse
+  learning_rate: 0.03
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1

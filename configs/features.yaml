@@ -1,0 +1,29 @@
+# Per-user rolling-window aggregates computed as of each anchor date.
+# value_cols x aggs x windows = the bulk of the feature set; recency/tenure/
+# calendar/platform-trend features are added on top unconditionally (see
+# src/ecup_ltv/features.py).
+value_cols: [gmv, gmv_search, gmv_cat, searches, to_cart, to_ord,
+             # channel-level daily flags, previously unused (raw data has 16
+             # columns, only 6 were aggregated) - search/cat give a
+             # per-channel active-day count distinct from the combined
+             # `searches`/`to_cart`/`to_ord`; has_*_to_cart/ord are binary
+             # "did this user convert today" flags, robust to single bursty
+             # days in a way that raw counts aren't. See
+             # experiments/unused_columns/notes.md.
+             search, cat, has_search_to_cart, has_search_to_ord, has_cat_to_cart, has_cat_to_ord]
+aggs: [sum, mean, std, max]
+
+# Each window is [anchor - start_offset, anchor - end_offset] inclusive, in days.
+windows:
+  - {name: "07d", start_offset: 6, end_offset: 0}
+  - {name: "14d", start_offset: 13, end_offset: 0}
+  - {name: "30d", start_offset: 29, end_offset: 0}
+  - {name: "60d", start_offset: 59, end_offset: 0}
+  - {name: "90d", start_offset: 89, end_offset: 0}
+  - {name: "180d", start_offset: 179, end_offset: 0}
+  - {name: "all", start_offset: 2000, end_offset: 0}  # since data start (> 409-day span)
+  # calendar-equivalent of the 30-day target window one year earlier
+  # (fully in the past relative to anchor -> no leakage); gives the model a
+  # direct year-over-year seasonality signal that no CV fold's own target
+  # window can provide.
+  - {name: "yoy30d", start_offset: 364, end_offset: 335}

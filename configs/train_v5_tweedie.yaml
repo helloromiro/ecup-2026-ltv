@@ -1,0 +1,31 @@
+name: v5_tweedie
+description: >
+  Novel angle (not explored in the prior research phase): Tweedie loss
+  directly on the raw non-negative, zero-inflated, right-skewed GMV target
+  instead of log1p + plain regression. Tweedie is the standard loss for
+  exactly this kind of target (insurance claims, GMV) since it models the
+  zero mass and the skew in one objective, rather than requiring a log1p
+  transform or a separate hurdle model (which was tried in the earlier
+  research phase and did not clearly beat plain log1p regression).
+  target_transform: none because Tweedie expects the raw scale.
+
+seeds: [42, 123, 7]
+top_n_features: 100
+num_boost_round: 700
+early_stopping_rounds: 50
+target_transform: none
+
+lgbm_params:
+  objective: tweedie
+  tweedie_variance_power: 1.3
+  metric: tweedie
+  learning_rate: 0.06
+  num_leaves: 127
+  max_depth: 8
+  min_data_in_leaf: 150
+  feature_fraction: 0.75
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  lambda_l2: 6.0
+  num_threads: 4
+  verbosity: -1
